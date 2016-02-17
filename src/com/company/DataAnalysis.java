@@ -49,14 +49,12 @@ public class DataAnalysis {
       float reads = 0;
       float counter = 0;
       for (Record r: records) {
-         for (String s: r.infoSplit) {
-            if (!r.info.contains("INDEL") && s.substring(0,2).equals("DP") && !s.substring(2,3).equals("4")) {
-               int read = Integer.parseInt(s.substring(3,s.length()));
-               reads+= read;
+         if (!r.info.contains("INDEL")) {
+               int read = Integer.parseInt(r.infoSplit.get("DP"));
+               reads += read;
                counter++;
             }
          }
-      }
       return reads / counter;
    }
 

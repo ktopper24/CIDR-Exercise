@@ -4,6 +4,8 @@ package com.company;
  * Created by Kayla on 2/15/2016.
  */
 
+import java.util.HashMap;
+
 /**
  * A record represents a single genetic variation, each field has a corresponding instance variable
  * The info variable is further split into fields
@@ -30,9 +32,19 @@ public class Record {
      * @param info
     * @return An array of key value pairs present in the info field of a record
     */
-   public static String[] splitInfo( String info){
+   public static HashMap<String, String> splitInfo(String info){
       String[] infoSplit = info.split(";");
-      return infoSplit;
+      HashMap<String, String> infoHash = new HashMap<>();
+      for (String s: infoSplit) {
+         if (s.contains("=")) {
+            String[] pairs = s.split("=");
+            infoHash.put(pairs[0], pairs[1]);
+         }
+         else {
+            infoHash.put(s, null);
+         }
+      }
+      return infoHash;
    }
 
    public String chrom;
@@ -45,6 +57,6 @@ public class Record {
    public String info;
    public String format;
    public String HG;
-   public String[] infoSplit;
+   public HashMap<String, String> infoSplit;
 
 }
